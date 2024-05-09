@@ -51,15 +51,19 @@ def crear_cliente(request):
                 'form' :serialized_form
             }
 
-            
+            context ={
+                'form': form,
+            }   
            
             
             response = requests.post('http://localhost:8001/verificar/', data=data_cifrada)
             if response.status_code == 200:
                 response_data = response.json()
                 message = response_data.get('message')
-            else:
-                print("Comunicacion rara")
+                return render(request, "Cliente/crearClienteAceptar.html", context)
+            elif response.status_code == 400:
+                return render(request, "Cliente/crearClienteError.html", context)
+            
         else:
             print(form.errors)
     else:
@@ -68,7 +72,9 @@ def crear_cliente(request):
     context ={
         'form': form,
     }
+    
 
+    
     return render(request, "Cliente/crearCliente.html", context)
 
 def clientes_list(request):
@@ -76,4 +82,4 @@ def clientes_list(request):
     context = {
         'clientes_list': clientes
     }
-    return render(request, 'Cliente/clientes.html', context)   
+    return render(request, 'Cliente/clientes.html', context)
