@@ -50,12 +50,13 @@ def crear_cliente(request):
                 'hash':data_completa_hash,
                 'form' :serialized_form
             }
-            print(nombreCifrado)
+
+            print(data_completa)
+            
             response = requests.post('http://localhost:8001/verificar/', data=data_cifrada)
             if response.status_code == 200:
                 response_data = response.json()
                 message = response_data.get('message')
-                print(message)
             else:
                 print("Comunicacion rara")
         else:
