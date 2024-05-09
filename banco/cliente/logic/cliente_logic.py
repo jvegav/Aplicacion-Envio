@@ -4,6 +4,8 @@ import hashlib
 
 import base64
 
+from ..models import Cliente
+
 def encrypt_message(private_key, message):
     rsa_key = RSA.import_key(private_key)
     cipher = PKCS1_OAEP.new(rsa_key)
@@ -29,3 +31,7 @@ def generate_key_pair():
 def calculate_hash(message):
     hash_object = hashlib.sha256(message.encode())
     return hash_object.hexdigest()
+
+def get_clientes():
+    queryset = Cliente.objects.all()
+    return (queryset)

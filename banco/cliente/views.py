@@ -37,7 +37,7 @@ def crear_cliente(request):
             
 
             # serializamos el form
-            serialized_form = json.loads(json.dumps(form.cleaned_data))
+            serialized_form = json.dumps(form.cleaned_data)
 
 
             # CREAR RESPUESTA
@@ -51,7 +51,8 @@ def crear_cliente(request):
                 'form' :serialized_form
             }
 
-            print(data_completa)
+            
+           
             
             response = requests.post('http://localhost:8001/verificar/', data=data_cifrada)
             if response.status_code == 200:
@@ -70,4 +71,9 @@ def crear_cliente(request):
 
     return render(request, "Cliente/crearCliente.html", context)
 
-    
+def clientes_list(request):
+    clientes = get_clientes()
+    context = {
+        'clientes_list': clientes
+    }
+    return render(request, 'Cliente/clientes.html', context)   
